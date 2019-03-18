@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Calculator Application</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title">Calculator Application</string>
+    <string name="nav_header_subtitle" translatable="false">swati.khobragade@globallogic.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="hello_blank_fragment" translatable="false">Hello Blank Fragment</string>
+    <string name="result" translatable="false">Result</string>
+    <string name="log" translatable="false">Log</string>
+    <string name="logN" translatable="false">Ln</string>
+    <string name="add" translatable="false">Add</string>
+    <string name="Sub" translatable="false">Sub</string>
+    <string name="Mult" translatable="false">Mul</string>
+    <string name="Div" translatable="false">Div</string>
+
+</resources>
