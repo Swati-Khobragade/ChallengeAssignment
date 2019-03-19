@@ -44,6 +44,7 @@ public class BasicOperationCalculation implements ArithmeticOperationInterface {
                 break;
         }
         Log.d("calculated Value", String.valueOf(calculatedValue));
+        System.out.println("calculated Value===>>>"+calculatedValue);
         return calculatedValue;
     }
 

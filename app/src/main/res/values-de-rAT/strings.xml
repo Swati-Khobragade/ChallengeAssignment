@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">" Rechner-Anwendung"</string>
-    <string name="nav_header_title">" Rechner-Anwendung"</string>
+    <string name="nav_header_title">" Taschenrechner"</string>
+    <string name="Div" translatable="false">Calculatrice</string>
 </resources>

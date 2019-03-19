@@ -5,8 +5,10 @@ package com.example.calculatorapplication.activity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -28,22 +30,36 @@ public class CalculatorActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private ViewPager viewPager;
-    private CalculatorPagerAdapter calculatorPagerAdapter;
+    private CalculatorPagerAdapter mCalculatorPagerAdapter;
     private DrawerLayout drawer;
     private Button mbuttonRed;
     private Button mbuttonGreen;
     private Button mbuttonCyan;
-    private String colorVal;
     private BasicCalculatorFragment basicCalculatorFragment;
     private ScientificCalculatorFragment scientificCalculatorFragment;
+    private TabLayout tabLayout;
+    private int[] tabIcons = {
+            R.drawable.basic_calculator,
+            R.drawable.scientific_calculator,
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        registerListeners();
         setAdapter();
+        setPageTransformer();
+        registerListeners();
+        setupTabIcons();
+    }
+
+    /**
+     * Set Tab Icons
+     */
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
     }
 
     /**
@@ -72,14 +88,31 @@ public class CalculatorActivity extends AppCompatActivity
         mbuttonRed = findViewById(R.id.buttonRed);
         mbuttonGreen = findViewById(R.id.buttonGreen);
         mbuttonCyan = findViewById(R.id.buttonCyan);
+        tabLayout = findViewById(R.id.tabLayout);
+        Log.d("tabLayout-", tabLayout + "");
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     /**
      * Set Adapter to ViewPager
      */
     private void setAdapter() {
-        calculatorPagerAdapter = new CalculatorPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(calculatorPagerAdapter);
+        mCalculatorPagerAdapter = new CalculatorPagerAdapter(getSupportFragmentManager(), this);
+        viewPager.setAdapter(mCalculatorPagerAdapter);
+    }
+
+    /**
+     * Set PageTransformer ti ViewPager
+     */
+    private void setPageTransformer() {
+        viewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View view, float position) {
+                final float normalizedposition = Math.abs(Math.abs(position) - 1);
+                view.setScaleX(normalizedposition / 2 + 0.5f);
+                view.setScaleY(normalizedposition / 2 + 0.5f);
+            }
+        });
     }
 
     @Override
@@ -139,10 +172,10 @@ public class CalculatorActivity extends AppCompatActivity
 
     /**
      * Set Color to outer Frame
+     *
      * @param color
      */
     private void setFrameColor(String color) {
-        colorVal = "" + color;
         Log.d("color", color + "");
         basicCalculatorFragment = (BasicCalculatorFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPagerCalculator + ":" + 0);
         Bundle bundle = new Bundle();

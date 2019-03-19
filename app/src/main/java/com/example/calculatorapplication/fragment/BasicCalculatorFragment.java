@@ -120,6 +120,7 @@ public class BasicCalculatorFragment extends Fragment implements View.OnClickLis
 
     /**
      * Validate Empty Fields
+     *
      * @param firstNum
      * @param secondNum
      * @return
@@ -138,6 +139,7 @@ public class BasicCalculatorFragment extends Fragment implements View.OnClickLis
 
     /**
      * Perform Arithmetic Operation based on String passed
+     *
      * @param operation
      */
     private void performOperation(String operation) {
@@ -146,12 +148,17 @@ public class BasicCalculatorFragment extends Fragment implements View.OnClickLis
         if (validateFields(firstNum, secondNum)) {
             BasicOperationCalculation basicOperationCalculation = new BasicOperationCalculation();
             double result = basicOperationCalculation.calculateBasicOperation(Double.parseDouble(firstNum), Double.parseDouble(secondNum), operation);
+            if (Double.isNaN(result)) {
+                mResultTextView.setText("Can't divide by zero");
+                return;
+            }
             mResultTextView.setText("" + result);
         }
     }
 
     /**
      * Set Background color to outer frame
+     *
      * @param args
      */
     public void putArguments(Bundle args) {
