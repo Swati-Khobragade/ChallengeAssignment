@@ -39,8 +39,8 @@ public class CalculatorActivity extends AppCompatActivity
     private ScientificCalculatorFragment scientificCalculatorFragment;
     private TabLayout tabLayout;
     private int[] tabIcons = {
-            R.drawable.basic_calculator,
-            R.drawable.scientific_calculator,
+            R.drawable.basic_calculator_tab,
+            R.drawable.scientific_calculator_tab,
     };
 
     @Override
