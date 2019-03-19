@@ -3,7 +3,6 @@ package com.example.calculatorapplication.fragment;
 @author Swati.Khobragade
  */
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.calculatorapplication.Controller.ScientificOperationCalculation;
+import com.example.calculatorapplication.Enum.OperationEnum;
 import com.example.calculatorapplication.R;
 
 import static android.widget.Toast.LENGTH_SHORT;
@@ -29,7 +29,7 @@ import static android.widget.Toast.LENGTH_SHORT;
  * Use the {@link ScientificCalculatorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ScientificCalculatorFragment extends Fragment implements View.OnClickListener {
+public class ScientificCalculatorFragment extends Fragment implements View.OnClickListener, BaseFragment {
     private View view;
     private Button mLogBtn;
     private Button mLogNBtn;
@@ -93,29 +93,34 @@ public class ScientificCalculatorFragment extends Fragment implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnLog:
-                performOperation("log");
+                performOperation(OperationEnum.LOG);
                 break;
             case R.id.btnLogN:
-                performOperation("logN");
+                performOperation(OperationEnum.LOGN);
                 break;
         }
     }
 
     /**
      * Perform Perform Operation based on Passed String
+     *
      * @param operation
      */
-    private void performOperation(String operation) {
+    private void performOperation(OperationEnum operation) {
         String numberValue = mNumberEditText.getText().toString().trim();
         if (validateFields(numberValue)) {
             ScientificOperationCalculation scientificOperationCalculation = new ScientificOperationCalculation();
             double result = scientificOperationCalculation.calculateScientificOperation(Double.parseDouble(numberValue), operation);
-            mResultTextView.setText("" + result);
+            String resultStr = "" + result;
+            resultStr = resultStr.indexOf(".") < 0 ? resultStr : resultStr.replaceAll("0*$", "").replaceAll("\\.$", "");
+            Log.d("resultStr**", resultStr);
+            mResultTextView.setText(resultStr);
         }
     }
 
     /**
      * Validate Fields
+     *
      * @param number
      * @return
      */
@@ -129,12 +134,13 @@ public class ScientificCalculatorFragment extends Fragment implements View.OnCli
 
     /**
      * Set Backgroud color to outer frame
-     * @param bundle
+     *
+     * @param args
      */
-    public void putArguments(Bundle bundle) {
-        String colorVal = bundle.getString("selectedColor");
-        Log.d("colorVal", "" + colorVal);
-        mRelativeLayoutScientific.setBackgroundColor(Color.parseColor(colorVal));
+    @Override
+    public void putArguments(Bundle args) {
+        int colorVal = args.getInt("selectedColor");
+        mRelativeLayoutScientific.setBackgroundColor(getResources().getColor(colorVal));
     }
 }
 

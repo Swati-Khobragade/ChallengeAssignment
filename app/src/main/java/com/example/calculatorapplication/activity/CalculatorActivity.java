@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -26,6 +27,8 @@ import com.example.calculatorapplication.adapter.CalculatorPagerAdapter;
 import com.example.calculatorapplication.fragment.BasicCalculatorFragment;
 import com.example.calculatorapplication.fragment.ScientificCalculatorFragment;
 
+import java.util.ArrayList;
+
 public class CalculatorActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -37,6 +40,7 @@ public class CalculatorActivity extends AppCompatActivity
     private Button mbuttonCyan;
     private BasicCalculatorFragment basicCalculatorFragment;
     private ScientificCalculatorFragment scientificCalculatorFragment;
+    ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
     private TabLayout tabLayout;
     private int[] tabIcons = {
             R.drawable.basic_calculator_tab,
@@ -58,8 +62,10 @@ public class CalculatorActivity extends AppCompatActivity
      * Set Tab Icons
      */
     private void setupTabIcons() {
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        if(tabLayout!=null){
+            tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+            tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        }
     }
 
     /**
@@ -97,7 +103,10 @@ public class CalculatorActivity extends AppCompatActivity
      * Set Adapter to ViewPager
      */
     private void setAdapter() {
-        mCalculatorPagerAdapter = new CalculatorPagerAdapter(getSupportFragmentManager(), this);
+        fragmentArrayList.add(basicCalculatorFragment);
+        fragmentArrayList.add(scientificCalculatorFragment);
+        String[] titleArray = {"Basic", "Scientific"};
+        mCalculatorPagerAdapter = new CalculatorPagerAdapter(getSupportFragmentManager(), this, fragmentArrayList, titleArray);
         viewPager.setAdapter(mCalculatorPagerAdapter);
     }
 
@@ -159,33 +168,30 @@ public class CalculatorActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonRed:
-                setFrameColor("#ff3232");
+                setFrameColor(R.color.redCircle);
                 break;
             case R.id.buttonGreen:
-                setFrameColor("#329932");
+                setFrameColor(R.color.greenCircle);
                 break;
             case R.id.buttonCyan:
-                setFrameColor("#00e5e5");
+                setFrameColor(R.color.cyanCircle);
                 break;
         }
     }
 
     /**
      * Set Color to outer Frame
-     *
      * @param color
      */
-    private void setFrameColor(String color) {
+    private void setFrameColor(int color) {
         Log.d("color", color + "");
-        basicCalculatorFragment = (BasicCalculatorFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPagerCalculator + ":" + 0);
         Bundle bundle = new Bundle();
-        bundle.putString("selectedColor", color);
+        bundle.putInt("selectedColor", color);
+        basicCalculatorFragment = (BasicCalculatorFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPagerCalculator + ":" + 0);
         basicCalculatorFragment.putArguments(bundle);
 
         scientificCalculatorFragment = (ScientificCalculatorFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewPagerCalculator + ":" + 1);
-        Bundle bundle1 = new Bundle();
-        bundle1.putString("selectedColor", color);
-        scientificCalculatorFragment.putArguments(bundle1);
+        scientificCalculatorFragment.putArguments(bundle);
 
         drawer.closeDrawer(GravityCompat.START);
     }

@@ -14,5 +14,8 @@
     <string name="Sub" translatable="false">Sub</string>
     <string name="Mult" translatable="false">Mul</string>
     <string name="Div" translatable="false">Div</string>
+    <string name="firstNum" translatable="false">First Number</string>
+    <string name="secondNum" translatable="false">Second Number</string>
+    <string name="number" translatable="false">Number</string>
 
 </resources>

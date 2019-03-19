@@ -3,7 +3,6 @@ package com.example.calculatorapplication.fragment;
  * @author Swati.Khobragade
  */
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.calculatorapplication.Controller.BasicOperationCalculation;
+import com.example.calculatorapplication.Enum.OperationEnum;
 import com.example.calculatorapplication.R;
 
 import static android.widget.Toast.LENGTH_SHORT;
@@ -29,7 +29,7 @@ import static android.widget.Toast.LENGTH_SHORT;
  * Use the {@link BasicCalculatorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BasicCalculatorFragment extends Fragment implements View.OnClickListener {
+public class BasicCalculatorFragment extends Fragment implements View.OnClickListener, BaseFragment {
     private View view;
     private Button mAddBtn;
     private Button mSubBtn;
@@ -104,16 +104,16 @@ public class BasicCalculatorFragment extends Fragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnAdd:
-                performOperation("add");
+                performOperation(OperationEnum.ADD);
                 break;
             case R.id.btnSub:
-                performOperation("sub");
+                performOperation(OperationEnum.SUB);
                 break;
             case R.id.btnMult:
-                performOperation("mult");
+                performOperation(OperationEnum.MULTIPLY);
                 break;
             case R.id.btnDiv:
-                performOperation("div");
+                performOperation(OperationEnum.DIVIDE);
                 break;
         }
     }
@@ -142,29 +142,31 @@ public class BasicCalculatorFragment extends Fragment implements View.OnClickLis
      *
      * @param operation
      */
-    private void performOperation(String operation) {
+    private void performOperation(OperationEnum operation) {
         String firstNum = mFirstNumberEditText.getText().toString().trim();
         String secondNum = mSecondNumberEditText.getText().toString().trim();
         if (validateFields(firstNum, secondNum)) {
             BasicOperationCalculation basicOperationCalculation = new BasicOperationCalculation();
             double result = basicOperationCalculation.calculateBasicOperation(Double.parseDouble(firstNum), Double.parseDouble(secondNum), operation);
+            String resultStr = "" + result;
+            resultStr = resultStr.indexOf(".") < 0 ? resultStr : resultStr.replaceAll("0*$", "").replaceAll("\\.$", "");
+            Log.d("resultStr**", resultStr);
             if (Double.isNaN(result)) {
                 mResultTextView.setText("Can't divide by zero");
                 return;
             }
-            mResultTextView.setText("" + result);
+            mResultTextView.setText(resultStr);
         }
     }
 
     /**
-     * Set Background color to outer frame
+     * Set Backgroud color to outer frame
      *
      * @param args
      */
+    @Override
     public void putArguments(Bundle args) {
-        String colorVal = args.getString("selectedColor");
-        Log.d("colorVal", "" + colorVal);
-        mRelativeLayoutBasic.setBackgroundColor(Color.parseColor(colorVal));
+        int colorVal = args.getInt("selectedColor");
+        mRelativeLayoutBasic.setBackgroundColor(getResources().getColor(colorVal));
     }
-
 }

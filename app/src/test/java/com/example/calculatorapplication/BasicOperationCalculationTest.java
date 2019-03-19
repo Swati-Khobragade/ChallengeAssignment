@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 public class BasicOperationCalculationTest {
@@ -29,20 +30,40 @@ public class BasicOperationCalculationTest {
     public void tearDown() {
         basicOperationCalculation = null;
     }
+
+    /**
+     * Method to test addition operation
+     */
     @Test
-    public void addition_isCorrect() {
-        assertEquals(basicOperationCalculation.calculateBasicOperation(6, 4, "add"),10.0,0.0);
+    public void testAdditionOperation() {
+        assertEquals(basicOperationCalculation.calculateBasicOperation(6, 4, "add"), 10.0, 0.0);
+        assertNotSame(basicOperationCalculation.calculateBasicOperation(6, 4, "add"), 15);
     }
+
+    /**
+     * Method to test subtraction operation
+     */
     @Test
-    public void subtraction_isCorrect() {
-        assertEquals(basicOperationCalculation.calculateBasicOperation(6, 4, "sub"),2.0,0.0);
+    public void testSubtractionOperation() {
+        assertEquals(basicOperationCalculation.calculateBasicOperation(6, 4, "sub"), 2.0, 0.0);
+        assertNotSame(basicOperationCalculation.calculateBasicOperation(6, 4, "sub"), 6.0);
     }
+
+    /**
+     * Method to test multiplication operation
+     */
     @Test
-    public void multiplication_isCorrect() {
-        assertEquals(basicOperationCalculation.calculateBasicOperation(6, 4, "mult"),24.0,0.0);
+    public void testMultiplicationOperation() {
+        assertEquals(basicOperationCalculation.calculateBasicOperation(6, 4, "mult"), 24.0, 0.0);
+        assertNotSame(basicOperationCalculation.calculateBasicOperation(6, 4, "mult"), 22.0);
     }
+
+    /**
+     * Method to test division operation
+     */
     @Test
-    public void division_isCorrect() {
-        assertEquals(basicOperationCalculation.calculateBasicOperation(6, 4, "div"),1.5,0.0);
+    public void testDivisionOperation() {
+        assertEquals(basicOperationCalculation.calculateBasicOperation(6, 4, "div"), 1.5, 0.0);
+        assertNotSame(basicOperationCalculation.calculateBasicOperation(6, 4, "div"), 6.5);
     }
 }

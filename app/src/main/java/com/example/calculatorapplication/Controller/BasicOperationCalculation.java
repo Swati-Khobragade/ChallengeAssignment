@@ -5,51 +5,80 @@ package com.example.calculatorapplication.Controller;
 
 import android.util.Log;
 
-import com.example.calculatorapplication.CalculatorInterface.ArithmeticOperationInterface;
+import com.example.calculatorapplication.CalculatorInterface.BasicOperationInterface;
+import com.example.calculatorapplication.Enum.OperationEnum;
 
-public class BasicOperationCalculation implements ArithmeticOperationInterface {
+public class BasicOperationCalculation implements BasicOperationInterface {
+    double mFirstNum;
+    double mSecondNum;
+    double mCalculatedValue;
+
     @Override
-    public double calculateBasicOperation(double firstNum, double secondNum, String operation) {
-        Log.d("firstNum", String.valueOf(firstNum));
-        Log.d("secondNum", String.valueOf(secondNum));
-        double calculatedValue = 0;
+    public double calculateBasicOperation(double firstNum, double secondNum, OperationEnum operation) {
+        Log.d("mFirstNum", String.valueOf(firstNum));
+        Log.d("mSecondNum", String.valueOf(secondNum));
+        mFirstNum = firstNum;
+        mSecondNum = secondNum;
+        mCalculatedValue = 0;
         switch (operation) {
-            case "add":
-                try {
-                    calculatedValue = firstNum + secondNum;
-                } catch (ArithmeticException ex) {
-                    Log.e("Exception::", ex.getMessage());
-                }
+            case ADD:
+                addOperation();
                 break;
-            case "sub":
-                try {
-                    calculatedValue = firstNum - secondNum;
-                } catch (ArithmeticException ex) {
-                    Log.e("Exception::", ex.getMessage());
-                }
+            case SUB:
+                subOperation();
                 break;
-            case "mult":
-                try {
-                    calculatedValue = firstNum * secondNum;
-                } catch (ArithmeticException ex) {
-                    Log.e("Exception::", ex.getMessage());
-                }
+            case MULTIPLY:
+                multiplyOperation();
                 break;
-            case "div":
-                try {
-                    calculatedValue = firstNum / secondNum;
-                } catch (ArithmeticException ex) {
-                    Log.e("Exception::", ex.getMessage());
-                }
+            case DIVIDE:
+                divideOperation();
                 break;
         }
-        Log.d("calculated Value", String.valueOf(calculatedValue));
-        System.out.println("calculated Value===>>>"+calculatedValue);
-        return calculatedValue;
+        Log.d("calculated Value", String.valueOf(mCalculatedValue));
+        return mCalculatedValue;
     }
 
-    @Override
-    public double calculateScientificOperation(double number, String operation) {
-        return 0;
+    /**
+     * Method to Add Numbers
+     */
+    private void addOperation() {
+        try {
+            mCalculatedValue = mFirstNum + mSecondNum;
+        } catch (ArithmeticException ex) {
+            Log.e("Exception::", ex.getMessage());
+        }
+    }
+
+    /**
+     * Method to Subtract Numbers
+     */
+    private void subOperation() {
+        try {
+            mCalculatedValue = mFirstNum - mSecondNum;
+        } catch (ArithmeticException ex) {
+            Log.e("Exception::", ex.getMessage());
+        }
+    }
+
+    /**
+     * Method to Multiply Numbers
+     */
+    private void multiplyOperation() {
+        try {
+            mCalculatedValue = mFirstNum * mSecondNum;
+        } catch (ArithmeticException ex) {
+            Log.e("Exception::", ex.getMessage());
+        }
+    }
+
+    /**
+     * Method to Divide Numbers
+     */
+    private void divideOperation() {
+        try {
+            mCalculatedValue = mFirstNum / mSecondNum;
+        } catch (ArithmeticException ex) {
+            Log.e("Exception::", ex.getMessage());
+        }
     }
 }

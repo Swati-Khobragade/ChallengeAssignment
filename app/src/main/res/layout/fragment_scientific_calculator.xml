@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/mainLayoutScientific"
-    android:background="@color/colorAccent"
+    android:background="@color/design_default_color_primary_dark"
     tools:context=".fragment.ScientificCalculatorFragment">
 
     <RelativeLayout
@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/etResulScientific"
             android:layout_weight="1"
+            android:hint="@string/number"
             android:inputType="numberDecimal" />
 
         <Button

@@ -7,4 +7,7 @@
     <color name="ScreenColor">#3F51B5</color>
     <color name="ToolBarColor">#E28600</color>
     <color name="colorBackground">#003385</color>
+    <color name="redCircle">#ff3232</color>
+    <color name="greenCircle">#329932</color>
+    <color name="cyanCircle">#00e5e5</color>
 </resources>
